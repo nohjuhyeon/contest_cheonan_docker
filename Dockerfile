@@ -2,7 +2,7 @@ FROM python:3.11
 
 # OpenJDK 설치 (예시로 OpenJDK 17을 설치)
 RUN apt-get update && \
-    apt-get install -y openjdk-17-jdk fonts-nanum && \
+    apt-get install -y openjdk-17-jdk fonts-nanum build-essential libhdf5-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -21,13 +21,10 @@ RUN git clone https://github.com/nohjuhyeon/contest_cheonan ${DIR_NAME}         
 # Changes the working directory to /app/${REPO_NAME}. This uses the variable to dynamically set the directory path.
 WORKDIR /app/${DIR_NAME}
 
-RUN ls -al
-RUN if [ -f requirements.txt ]; then echo "requirements.txt exists"; else echo "requirements.txt not found"; fi
-
 # RUN pip install --no-cache-dir -r ./requirements.txt
 RUN pip install -r ./requirements.txt
 
-RUN rm -rf .git               # 도커 만들어지고나면 주석처리하기
+# RUN rm -rf .git               # 도커 만들어지고나면 주석처리하기
 
 ## 진행전 해야할 선작업
 # - .git 삭제
